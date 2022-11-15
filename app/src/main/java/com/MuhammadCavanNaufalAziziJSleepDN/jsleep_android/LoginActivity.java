@@ -19,7 +19,7 @@ public class LoginActivity extends AppCompatActivity {
         TextView register = findViewById(R.id.RegisterNow);
         TextView login = findViewById(R.id.Login);
 
-        register.setOnClickListener(new View.OnClickListener(){
+        register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent move = new Intent(LoginActivity.this, RegisterActivity.class);
@@ -27,17 +27,12 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        login.setOnClickListener(new View.OnClickListener(){
+        login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent move = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(move);
             }
         });
-
     }
-
-
-
-
 }
