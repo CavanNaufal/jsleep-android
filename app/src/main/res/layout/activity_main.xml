@@ -1,20 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/textView"
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="HelloUser!"
-        android:textSize="34sp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".MainActivity">
+
+        <Button
+            android:id="@+id/MainPrevButton"
+            android:layout_width="18dp"
+            android:layout_height="48dp"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1"
+            android:text="PREV"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="53dp" />
+
+        <Button
+            android:id="@+id/MainNextButton"
+            android:layout_width="18dp"
+            android:layout_height="48dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:text="NEXT"
+            tools:layout_editor_absoluteX="121dp"
+            tools:layout_editor_absoluteY="53dp" />
+
+        <EditText
+            android:id="@+id/MainPage"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="48dp"
+            android:layout_marginRight="20dp"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:text="1"
+            android:textAlignment="center"
+            tools:layout_editor_absoluteX="230dp"
+            tools:layout_editor_absoluteY="56dp" />
+
+        <Button
+            android:id="@+id/MainGoButton"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:text="GO"
+            tools:layout_editor_absoluteX="297dp"
+            tools:layout_editor_absoluteY="53dp" />
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/view_list"
+        android:layout_width="413dp"
+        android:layout_height="630dp"
+        android:layout_below="@id/linearLayout"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</LinearLayout>
