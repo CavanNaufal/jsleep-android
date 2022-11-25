@@ -1,6 +1,7 @@
 package com.MuhammadCavanNaufalAziziJSleepDN.jsleep_android.request;
 
 import com.MuhammadCavanNaufalAziziJSleepDN.jsleep_android.model.Account;
+import com.MuhammadCavanNaufalAziziJSleepDN.jsleep_android.model.Renter;
 import com.MuhammadCavanNaufalAziziJSleepDN.jsleep_android.model.Room;
 
 import retrofit2.Call;
@@ -21,4 +22,10 @@ public interface BaseApiService {
 
     @POST("account/register")
     Call<Account> registerRequest(@Query("name") String name, @Query("email") String email, @Query("password") String password);
+
+    @POST("/account/registerRenter")
+    Call<Renter> registerRenter(@Path("id") int id, @Query("name") String name, @Query("address") String address, @Query("phoneNumber") String phoneNumber);
+
+//    @POST("/Account/topUp")
+//    Call<Account> topUp(@Path("id") int id,  @Query("balance") double balance);
 }

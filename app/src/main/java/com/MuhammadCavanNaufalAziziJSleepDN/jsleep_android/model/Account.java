@@ -16,5 +16,4 @@ public class Account extends Serializable{
                 ", renter=" + renter +
                 '}';
     }
-
 }

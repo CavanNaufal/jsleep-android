@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.MuhammadCavanNaufalAziziJSleepDN.jsleep_android.model.Account;
+import com.MuhammadCavanNaufalAziziJSleepDN.jsleep_android.model.Renter;
 import com.MuhammadCavanNaufalAziziJSleepDN.jsleep_android.model.Room;
 import com.google.gson.Gson;
 
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static Account loginAccount;
     public static Account registerAccount;
+    public static Renter registerRenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
