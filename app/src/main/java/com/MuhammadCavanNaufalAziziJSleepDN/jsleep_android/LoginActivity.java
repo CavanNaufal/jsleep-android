@@ -45,6 +45,8 @@ public class LoginActivity extends AppCompatActivity {
         username = findViewById(R.id.UsernameLogin);
         password = findViewById(R.id.PasswordLogin);
 
+        if (getSupportActionBar() != null) getSupportActionBar().hide();
+
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

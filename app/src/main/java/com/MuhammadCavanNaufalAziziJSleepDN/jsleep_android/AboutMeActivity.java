@@ -37,6 +37,8 @@ public class AboutMeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_me);
 
+        if (getSupportActionBar() != null) getSupportActionBar().hide();
+
         mApiService = UtilsApi.getApiService();
         mContext = this;
         name = findViewById(R.id.NameAccount);
@@ -61,19 +63,15 @@ public class AboutMeActivity extends AppCompatActivity {
 
         name.setText(MainActivity.loginAccount.name);
         email.setText(MainActivity.loginAccount.email);
-        balance.setText(Double.toString(MainActivity.loginAccount.balance));
+        String balanceDetails = " " + MainActivity.loginAccount.balance;
+        balance.setText(balanceDetails);
 
-//        topUpButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (!balanceInput.getText().toString().isEmpty()){
-//                    requestTopUp();
-//                }
-//                else{
-//                    Toast.makeText(mContext, "Please input number of top up", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
+        topUpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                topUpRequest();
+            }
+        });
 
         if (MainActivity.loginAccount.renter == null){
             registerRenterButton.setOnClickListener(new View.OnClickListener() {
@@ -85,7 +83,7 @@ public class AboutMeActivity extends AppCompatActivity {
                     registerRenterCancelButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            registerRenterLayout.setVisibility(View.GONE);
+                            registerRenterLayout.setVisibility(View.INVISIBLE);
                             registerRenterButton.setVisibility(View.VISIBLE);
 
                         }
@@ -113,65 +111,53 @@ public class AboutMeActivity extends AppCompatActivity {
             renterLayout.setVisibility(View.VISIBLE);
         }
     }
+    protected Boolean topUpRequest(){
+        Double topUpAmount = Double.parseDouble(balanceInput.getText().toString());
+        mApiService.topUp(MainActivity.loginAccount.id, Double.parseDouble(balanceInput.getText().toString())).enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(mContext, "Top Up Success", Toast.LENGTH_SHORT).show();
+                    MainActivity.loginAccount.balance += topUpAmount;
+                    balance.setText(String.valueOf(MainActivity.loginAccount.balance));
+                } else {
+                    Toast.makeText(mContext, "Top Up Failed", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                Toast.makeText(mContext, "Top Up Failed", Toast.LENGTH_SHORT).show();
+            }
+        });
+        return false;
+    }
 
     protected Renter requestRenter(){
         mApiService.registerRenter(MainActivity.loginAccount.id,
                 renterNameInput.getText().toString(),
                 renterAddressInput.getText().toString(),
                 renterPhoneNumberInput.getText().toString()
-                ).enqueue(new Callback<Renter>() {
+        ).enqueue(new Callback<Renter>() {
             @Override
             public void onResponse(Call<Renter> call, Response<Renter> response) {
-                if (response.isSuccessful()){
-                    MainActivity.loginAccount.renter = response.body();
-                    Toast.makeText(mContext, "Register Renter Success!!", Toast.LENGTH_SHORT).show();
-                    System.out.println(response.body());
-                    registerRenterLayout.setVisibility(View.GONE);
-                    renterLayout.setVisibility(View.VISIBLE);
-
-
-                    Intent refresh = new Intent(mContext, AboutMeActivity.class);
-                    refresh.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-                    startActivity(refresh);
-
-                    renterName.setText(MainActivity.loginAccount.renter.username);
-                    renterAddress.setText(MainActivity.loginAccount.renter.address);
-                    renterPhoneNumber.setText(MainActivity.loginAccount.renter.phoneNumber);
+                if(response.isSuccessful()){
+                    Renter renter = response.body();
+                    MainActivity.loginAccount.renter = renter;
+                    Intent move = new Intent(AboutMeActivity.this, MainActivity.class);
+                    startActivity(move);
+                    Toast toast = Toast.makeText(getApplicationContext(), "Renter register Successful", Toast.LENGTH_SHORT);
+                    toast.show();
                 }
             }
+
             @Override
             public void onFailure(Call<Renter> call, Throwable t) {
-                Toast.makeText(mContext, "Register Renter Failed!!", Toast.LENGTH_SHORT).show();
-                System.out.println("id="+MainActivity.loginAccount.id);
+                System.out.println(t.toString());
+                Toast.makeText(mContext, "Renter already registered", Toast.LENGTH_SHORT).show();
             }
         });
         return null;
     }
 
-    //protected boolean requestTopUp(){
-
-//        mApiService.topUp(MainActivity.loginAccount.id,
-//                Double.parseDouble(balanceInput.getText().toString())).enqueue(new Callback<Boolean>() {
-//            @Override
-//            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-//                if (response.isSuccessful()){
-//                    Toast.makeText(mContext, "TopUp Success!!", Toast.LENGTH_SHORT).show();
-//                    if (Boolean.TRUE.equals(response.body())){
-//                        MainActivity.loginAccount.balance += Double.parseDouble(balanceInput.getText().toString());
-//                    }
-//                    System.out.println(response.body());
-//                    System.out.println(MainActivity.loginAccount.toString());
-//                    Intent refresh = new Intent(mContext, AboutMeActivity.class);
-//                    refresh.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-//                    startActivity(refresh);
-//                }
-//            }
-//            @Override
-//            public void onFailure(Call<Boolean> call, Throwable t) {
-//                Toast.makeText(mContext, "TopUp Failed!!", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-//        return true;
-//    }
 }

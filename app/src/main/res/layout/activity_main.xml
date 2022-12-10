@@ -7,6 +7,7 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:orientation="vertical"
+    android:background="@drawable/backgroundmain"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -49,6 +50,7 @@
             android:ems="10"
             android:inputType="numberDecimal"
             android:text="1"
+            android:textColor="@color/white"
             android:textAlignment="center"
             tools:layout_editor_absoluteX="230dp"
             tools:layout_editor_absoluteY="56dp" />
@@ -68,13 +70,14 @@
     <ListView
         android:id="@+id/view_list"
         android:layout_width="413dp"
-        android:layout_height="630dp"
+        android:layout_height="678dp"
         android:layout_below="@id/linearLayout"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
+
 
 
 </LinearLayout>
