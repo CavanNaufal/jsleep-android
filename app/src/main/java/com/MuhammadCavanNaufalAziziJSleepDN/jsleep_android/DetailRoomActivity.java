@@ -245,6 +245,12 @@ public class DetailRoomActivity extends AppCompatActivity {
         datePickerDialog1.show();
     }
 
+
+    /**
+     * Creates a new Payment object.
+     *
+     * @return the created Payment object
+     */
     protected Payment create(){
         mApiService.getPayment(MainActivity.loginAccount.id, MainActivity.loginAccount.renter.id, room.id, fromDate.toString(),
                 toDate.toString()).enqueue(new Callback<Payment>() {
@@ -252,8 +258,7 @@ public class DetailRoomActivity extends AppCompatActivity {
             public void onResponse(Call<Payment> call, Response<Payment> response) {
                 if(response.isSuccessful()){
                     MainActivity.paymentAccount = response.body();
-                    MainActivity.loginAccount.balance -= room.price.price;
-                    System.out.println("Berhasil");
+                    MainActivity.loginAccount.balance -= MainActivity.paymentAccount.totalPrice;
                     Intent move = new Intent(DetailRoomActivity.this, PaymentActivity.class);
                     startActivity(move);
                     Toast toast = Toast.makeText(getApplicationContext(), "Booking Succesfull", Toast.LENGTH_SHORT);

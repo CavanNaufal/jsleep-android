@@ -110,10 +110,6 @@ public class PaymentActivity extends AppCompatActivity {
 
     /**
      * Accepts the payment using the specified payment account.
-     *
-     * @param paymentAccount The payment account to use for accepting the payment
-     * @return The payment details, or null if the payment was not accepted
-     * @throws IOException if there was a problem communicating with the server
      */
     protected Payment paymentAcc(){
         mApiService.accept(MainActivity.paymentAccount.id).enqueue(new Callback<Boolean>() {
@@ -138,11 +134,6 @@ public class PaymentActivity extends AppCompatActivity {
 
     /**
      * Cancels a payment and updates the login account balance.
-     *
-     * @param paymentAccount the payment account to cancel
-     * @param room the room associated with the payment
-     * @return the Payment that was canceled, or null if the operation failed
-     * @throws PaymentException if the payment could not be canceled
      */
     protected Payment paymentCancel(){
         mApiService.cancel(MainActivity.paymentAccount.id).enqueue(new Callback<Boolean>() {

@@ -20,12 +20,7 @@ import retrofit2.Response;
 
 /**
  * Sends a request to register a new account.
- *
- * @param name the name of the user
- * @param email the email address of the user
- * @param password the password for the new account
  * @return the registered Account, or null if the operation failed
- * @throws AccountException if the account could not be registered
  */
 public class RegisterActivity extends AppCompatActivity {
     BaseApiService mApiService;
@@ -54,10 +49,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     /**
      * Sends a request to register a new account.
-     *
-     * @param name the name of the user
-     * @param email the email address of the user
-     * @param password the password for the new account
      * @return the registered Account, or null if the operation failed
      */
     protected Account requestRegister(){

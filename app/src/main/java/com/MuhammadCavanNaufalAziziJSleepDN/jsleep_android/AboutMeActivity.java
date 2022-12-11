@@ -120,6 +120,12 @@ public class AboutMeActivity extends AppCompatActivity {
             renterLayout.setVisibility(View.VISIBLE);
         }
     }
+
+    /**
+     * Attempts to top up the balance of the user's account.
+     *
+     * @return {@code true} if the top-up request was successful, {@code false} otherwise.
+     */
     protected Boolean topUpRequest(){
         Double topUpAmount = Double.parseDouble(balanceInput.getText().toString());
         mApiService.topUp(MainActivity.loginAccount.id, Double.parseDouble(balanceInput.getText().toString())).enqueue(new Callback<Boolean>() {
@@ -143,6 +149,10 @@ public class AboutMeActivity extends AppCompatActivity {
         return false;
     }
 
+    /**
+     * Registers a renter with the specified information.
+     * @return the registered renter
+     */
     protected Renter requestRenter(){
         mApiService.registerRenter(MainActivity.loginAccount.id,
                 renterNameInput.getText().toString(),

@@ -144,6 +144,19 @@ public class CreateRoomActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Requests a room with the specified parameters.
+     *
+     * @param accountId the ID of the account requesting the room
+     * @param name the name of the room
+     * @param size the size of the room
+     * @param price the price of the room
+     * @param facility the facilities available in the room
+     * @param city the city where the room is located
+     * @param address the address of the room
+     * @param bedType the type of bed in the room
+     * @return the requested room, or `null` if the request failed
+     */
     protected Room requestRoom(int accountId, String name, int size, int price, ArrayList<Facility> facility, City city, String address, BedType bedType) {
         mApiService.getRoom(accountId, name, size, price, facility, city, address, bedType).enqueue(new Callback<Room>() {
             @Override

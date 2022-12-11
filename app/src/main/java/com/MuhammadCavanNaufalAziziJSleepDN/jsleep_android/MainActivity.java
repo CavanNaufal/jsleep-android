@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.MuhammadCavanNaufalAziziJSleepDN.jsleep_android.model.Account;
@@ -56,13 +57,14 @@ public class MainActivity extends AppCompatActivity {
     EditText pageNum;
     Button prevPage, nextPage, goPage;
     ListView listView;
-    MenuItem addBut;
+    MenuItem addBut, persBut;
 
     private int currentPg = 1;
     private final int pSize = 20;
     public static int roomPosition;
     public static Room listRoom;
     public static List<Room> getRoom;
+    public static ArrayAdapter<String> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,14 +117,46 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * onCreateOptionsMenu is a method that inflates the menu resource and sets up a search view.
+     *
+     * @param menu the menu to be inflated
+     * @return true if the menu was successfully created
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menuresource, menu);
+        getMenuInflater().inflate(R.menu.menuresource, menu);
         addBut = menu.findItem(R.id.add_box_button);
+        persBut = menu.findItem(R.id.person_button);
         addBut.setVisible(MainActivity.loginAccount.renter != null);
-        return true;
+
+        MenuItem menuItem = menu.findItem(R.id.search_button);
+        SearchView searchView = (SearchView) menuItem.getActionView();
+        searchView.setQueryHint("Search");
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                adapter.getFilter().filter(s);
+                return false;
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
     }
+
+    /**
+     * This method is called when an option in the menu is selected.
+     *
+     * @param item The menu item that was selected.
+     * @return True if the event was handled, false otherwise.
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -164,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                         return;
                     }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext, android.R.layout.simple_list_item_1, names);
+                    adapter = new ArrayAdapter<>(mContext, android.R.layout.simple_list_item_1, names);
                     ListView listView = (ListView) findViewById(R.id.view_list);
                     listView.setAdapter(adapter);
                     pageNum.setText(String.valueOf(page));

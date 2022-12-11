@@ -66,13 +66,13 @@ public class LoginActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) getSupportActionBar().hide();
 
         SharedPreferences sharedPreferences = getSharedPreferences("checkbox", MODE_PRIVATE);
-        String checkbox = sharedPreferences.getString("remember", "");
+        String checkbox = sharedPreferences.getString("loginRemember", "");
 
         if (checkbox.equals("true")) {
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
         } else if (checkbox.equals("false")) {
-            Toast.makeText(this, "Please Sign In", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Sign In!", Toast.LENGTH_SHORT).show();
         }
 
         loginRemember.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
