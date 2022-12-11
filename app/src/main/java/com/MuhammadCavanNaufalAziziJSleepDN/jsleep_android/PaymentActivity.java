@@ -2,7 +2,6 @@ package com.MuhammadCavanNaufalAziziJSleepDN.jsleep_android;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,83 +21,58 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * This class represents an activity that displays the details of a payment
+ * and allows the user to accept or cancel the payment.
+ */
 public class PaymentActivity extends AppCompatActivity {
-
     TextView roomName, roomPrice, roomSize, roomAddress, roomBedtype, from, to, bookingDate;
     CheckBox ac, refri, wifi, bathub, balcony, restaurant, pool, fitness;
-    Button makeBookingButton, btnTo, btnFrom, cancel, booking;
+    Button cancel, accept;
 
     BaseApiService mApiService;
     Context mContext;
-    private DatePickerDialog datePickerDialog, datePickerDialog1;
-
     public static Room room;
-    Payment payment;
 
-    /**
-     * Called when the activity is first created.
-     *
-     * @param savedInstanceState the saved instance state (if any)
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Set the layout, initialize the API service, and get the context
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.payment_room);
+        setContentView(R.layout.activity_payment);
+
+        room = MainActivity.getRoom.get(MainActivity.roomPosition);
+
+        roomName = findViewById(R.id.RoomName1);
+        roomPrice = findViewById(R.id.price1);
+        roomSize = findViewById(R.id.size1);
+        roomAddress = findViewById(R.id.address1);
+        roomBedtype = findViewById(R.id.BedType1);
         mApiService = UtilsApi.getApiService();
         mContext = this;
 
+        ac = findViewById(R.id.AC1);
+        refri = findViewById(R.id.Refri1);
+        wifi = findViewById(R.id.WiFi1);
+        bathub = findViewById(R.id.bathTub1);
+        balcony = findViewById(R.id.balcony1);
+        restaurant = findViewById(R.id.restaurant1);
+        pool = findViewById(R.id.swimmingpool1);
+        fitness = findViewById(R.id.fitness1);
 
-        // Get the buttons and the room object
-        Button btnAcc = (Button) findViewById(R.id.btnCancel);
-        Button btnCancel = (Button) findViewById(R.id.btnCancel);
-        //room = MainActivity.roomList.get(MainActivity.detailRoom);
-
-        // Get the text views and check boxes
-        roomName = findViewById(R.id.RoomName);
-        roomPrice = findViewById(R.id.price);
-        roomSize = findViewById(R.id.size);
-        roomAddress = findViewById(R.id.address);
-        roomBedtype = findViewById(R.id.BedType);
-        //TextView fromDate = (TextView) findViewById(R.id.roomDetailFromDate);
-        //TextView toDate = (TextView) findViewById(R.id.roomDetailToDate);
-
-        ac = findViewById(R.id.AC);
-        refri = findViewById(R.id.Refri);
-        wifi = findViewById(R.id.WiFi);
-        bathub = findViewById(R.id.bathTub);
-        balcony = findViewById(R.id.balcony);
-        restaurant = findViewById(R.id.restaurant);
-        pool = findViewById(R.id.swimmingpool);
-        fitness = findViewById(R.id.fitness);
-        makeBookingButton = findViewById(R.id.MakeBookingButton);
-        btnFrom = findViewById(R.id.btnFrom);
-        btnTo = findViewById(R.id.btnTo);
-        from = findViewById(R.id.textFrom);
-        to = findViewById(R.id.textTo);
-        bookingDate = findViewById(R.id.BookingDate);
-        booking = findViewById(R.id.paymentButton);
-        cancel = findViewById(R.id.cancelButton);
+        accept = findViewById(R.id.AcceptPayment);
+        cancel = findViewById(R.id.CancelPayment);
 
         roomName.setText(room.name);
-        roomPrice.setText(String.valueOf(room.price.price));
+        System.out.println(room);
+        //String.valueOf(room.price.price)
+        String balance = String.valueOf(room.price.price);
+        roomPrice.setText("Rp " + balance);
         roomSize.setText(String.valueOf(room.size));
         roomAddress.setText(room.address);
         roomBedtype.setText(room.bedType.toString());
 
-        // Set the values of the text views and check the facilities
-        //roomName.setText("" + room.name);
-        //cityRoom.setText("" + room.city.toString().substring(0, 1) + room.city.toString().substring(1).toLowerCase());
-        //roomBedtype.setText("" + room.bedType.toString().substring(0, 1) + room.bedType.toString().substring(1).toLowerCase());
-        //roomSize.setText("" + room.size);
-        //roomPrice.setText("Rp " + MainActivity.paymentAccount.totalPrice);
-        //roomPrice.setText("" + room.address);
-//        fromDate.setText("" + BookRoom.fromDate);
-//        toDate.setText("" + BookRoom.toDate);
+        // Hide Action Bar
+        if (getSupportActionBar() != null) getSupportActionBar().hide();
 
-        /**
-         * Check the facilities of the room and disable them.
-         */
         for (int i = 0; i < room.facility.size(); i++) {
             if (room.facility.get(i).equals(Facility.AC)) {
                 ac.setChecked(true);
@@ -119,44 +93,37 @@ public class PaymentActivity extends AppCompatActivity {
             }
         }
 
-        /**
-         * Called when the accept button is clicked.
-         * Starts the main activity and makes the payment.
-         */
-        btnAcc.setOnClickListener(new View.OnClickListener(){
+        cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent move = new Intent(PaymentActivity.this, MainActivity.class);
-                startActivity(move);
-                paymentAcc();
-            }
-        });
-
-        /**
-         * Called when the cam button is clicked.
-         * Starts the main activity and makes the payment.
-         */
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent move = new Intent(PaymentActivity.this, MainActivity.class);
-                startActivity(move);
                 paymentCancel();
             }
         });
+
+        accept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                paymentAcc();
+            }
+        });
     }
+
     /**
-     * Makes the Accept payment and shows a toast message.
+     * Accepts the payment using the specified payment account.
      *
-     * @return the payment object (null in this case)
+     * @param paymentAccount The payment account to use for accepting the payment
+     * @return The payment details, or null if the payment was not accepted
+     * @throws IOException if there was a problem communicating with the server
      */
     protected Payment paymentAcc(){
-        mApiService.accept(MainActivity.loginAccount.id).enqueue(new Callback<Boolean>() {
+        mApiService.accept(MainActivity.paymentAccount.id).enqueue(new Callback<Boolean>() {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                 if(response.isSuccessful()){
                     Toast toast = Toast.makeText(getApplicationContext(), "Accept Successful", Toast.LENGTH_SHORT);
                     toast.show();
+                    Intent intent = new Intent(PaymentActivity.this, MainActivity.class);
+                    startActivity(intent);
                 }
             }
 
@@ -169,13 +136,24 @@ public class PaymentActivity extends AppCompatActivity {
         return null;
     }
 
+    /**
+     * Cancels a payment and updates the login account balance.
+     *
+     * @param paymentAccount the payment account to cancel
+     * @param room the room associated with the payment
+     * @return the Payment that was canceled, or null if the operation failed
+     * @throws PaymentException if the payment could not be canceled
+     */
     protected Payment paymentCancel(){
-        mApiService.cancel(MainActivity.loginAccount.id).enqueue(new Callback<Boolean>() {
+        mApiService.cancel(MainActivity.paymentAccount.id).enqueue(new Callback<Boolean>() {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                 if(response.isSuccessful()){
+                    MainActivity.loginAccount.balance += room.price.price;
                     Toast toast = Toast.makeText(getApplicationContext(), "Cancel Successful", Toast.LENGTH_SHORT);
                     toast.show();
+                    Intent intent = new Intent(PaymentActivity.this, MainActivity.class);
+                    startActivity(intent);
                 }
             }
             @Override

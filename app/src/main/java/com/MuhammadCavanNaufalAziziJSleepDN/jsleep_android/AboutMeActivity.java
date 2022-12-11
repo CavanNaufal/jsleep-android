@@ -23,6 +23,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
+/**
+ * AboutMeActivity is an activity that displays information about the logged in user,
+ * such as their name, email, and balance. It also allows the user to register as a renter
+ * by entering their name, address, and phone number.
+ */
 public class AboutMeActivity extends AppCompatActivity {
     BaseApiService mApiService;
     Context mContext;
@@ -63,9 +68,13 @@ public class AboutMeActivity extends AppCompatActivity {
 
         name.setText(MainActivity.loginAccount.name);
         email.setText(MainActivity.loginAccount.email);
-        String balanceDetails = " " + MainActivity.loginAccount.balance;
+        String balanceDetails = "Rp. " + MainActivity.loginAccount.balance;
         balance.setText(balanceDetails);
 
+        /**
+         * Called when the "Top Up" button is clicked. This method sends a request to the API
+         * to top up the user's balance.
+         */
         topUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -119,7 +128,8 @@ public class AboutMeActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     Toast.makeText(mContext, "Top Up Success", Toast.LENGTH_SHORT).show();
                     MainActivity.loginAccount.balance += topUpAmount;
-                    balance.setText(String.valueOf(MainActivity.loginAccount.balance));
+                    String balanceDetails = "Rp. " + MainActivity.loginAccount.balance;
+                    balance.setText(balanceDetails);
                 } else {
                     Toast.makeText(mContext, "Top Up Failed", Toast.LENGTH_SHORT).show();
                 }
@@ -159,5 +169,4 @@ public class AboutMeActivity extends AppCompatActivity {
         });
         return null;
     }
-
 }

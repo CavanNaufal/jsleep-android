@@ -7,6 +7,18 @@
     android:background="@drawable/backgroundaccount"
     tools:context=".AboutMeActivity">
 
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="48dp"
+        android:text="_____________________________"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textBalance" />
+
     <TextView
         android:id="@+id/textAccountDetails"
         android:layout_width="wrap_content"
@@ -28,6 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="42dp"
         android:layout_marginTop="32dp"
+        android:fontFamily="@font/poppins_semibold"
         android:text="Name"
         android:textColor="@color/white"
         android:textStyle="bold"
@@ -40,6 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="42dp"
         android:layout_marginTop="24dp"
+        android:fontFamily="@font/poppins_semibold"
         android:text="E-mail"
         android:textColor="@color/white"
         android:textStyle="bold"
@@ -52,6 +66,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="42dp"
         android:layout_marginTop="24dp"
+        android:fontFamily="@font/poppins_semibold"
         android:text="Balance"
         android:textColor="@color/white"
         android:textStyle="bold"
@@ -64,6 +79,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="42dp"
+        android:fontFamily="@font/poppins_medium"
         android:gravity="right"
         android:text="account_name"
         android:textColor="@color/white"
@@ -76,9 +92,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="42dp"
+        android:fontFamily="@font/poppins_medium"
         android:gravity="right"
-        android:textColor="@color/white"
         android:text="account_email"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/NameAccount" />
 
@@ -88,6 +105,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="42dp"
+        android:fontFamily="@font/poppins_medium"
         android:gravity="right"
         android:text="account_balance"
         android:textColor="@color/white"
@@ -137,6 +155,7 @@
             android:id="@+id/renter_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_semibold"
             android:text="Renter"
             android:textColor="@color/white"
             android:textSize="20sp"
@@ -154,6 +173,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="42dp"
             android:layout_marginTop="24dp"
+            android:fontFamily="@font/poppins_medium"
             android:text="Name"
             android:textColor="@color/white"
             android:textSize="14sp"
@@ -166,6 +186,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="42dp"
             android:layout_marginTop="24dp"
+            android:fontFamily="@font/poppins_medium"
             android:text="Address"
             android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="parent"
@@ -177,6 +198,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="42dp"
             android:layout_marginTop="24dp"
+            android:fontFamily="@font/poppins_medium"
             android:text="Phone Number"
             android:textColor="@color/white"
             android:textSize="14sp"
@@ -189,6 +211,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="42dp"
+            android:fontFamily="@font/poppins_medium"
             android:text="renter name"
             android:textAlignment="textEnd"
             android:textColor="@color/white"
@@ -202,6 +225,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="42dp"
+            android:fontFamily="@font/poppins_medium"
             android:text="renter address"
             android:textAlignment="viewEnd"
             android:textColor="@color/white"
@@ -214,6 +238,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="42dp"
+            android:fontFamily="@font/poppins_medium"
             android:text="phone number"
             android:textAlignment="textEnd"
             android:textColor="@color/white"
@@ -231,70 +256,107 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/topUpButton">
 
-        <EditText
-            android:id="@+id/renter_register_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="42dp"
-            android:layout_marginTop="42dp"
-            android:ems="10"
-            android:hint="Name"
-            android:inputType="textPersonName"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:textSize="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <EditText
-            android:id="@+id/renter_register_address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="42dp"
-            android:layout_marginTop="24dp"
-            android:ems="10"
-            android:hint="Address"
-            android:inputType="textPersonName"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:textSize="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/renter_register_name" />
-
-        <EditText
-            android:id="@+id/renter_register_phoneNumber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="42dp"
-            android:layout_marginTop="24dp"
-            android:ems="10"
-            android:hint="Phone Number"
-            android:inputType="textPersonName"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:textSize="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/renter_register_address" />
-
-        <Button
-            android:id="@+id/register_renter_button_accept"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="42dp"
-            android:layout_marginTop="24dp"
-            android:text="Register"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/renter_register_phoneNumber" />
-
-        <Button
-            android:id="@+id/register_renter_button_cancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="42dp"
-            android:text="cancel"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/RenterCard"
+            android:layout_width="370dp"
+            android:layout_height="317dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="31dp"
+            app:cardBackgroundColor="@color/material_on_primary_disabled"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/renter_register_phoneNumber" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="105dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="30dp"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="Register Renter"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textBalance" />
+
+            <EditText
+                android:id="@+id/renter_register_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginEnd="30dp"
+                android:ems="10"
+                android:hint="Name"
+                android:inputType="textPersonName"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/renter_register_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="120dp"
+                android:layout_marginEnd="30dp"
+                android:ems="10"
+                android:hint="Address"
+                android:inputType="textPersonName"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/renter_register_name" />
+
+            <EditText
+                android:id="@+id/renter_register_phoneNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="180dp"
+                android:layout_marginEnd="30dp"
+                android:ems="10"
+                android:hint="Phone Number"
+                android:inputType="textPersonName"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/renter_register_address" />
+
+            <Button
+                android:id="@+id/register_renter_button_accept"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="200dp"
+                android:layout_marginTop="250dp"
+                android:layout_marginEnd="30dp"
+                android:text="Register"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/renter_register_phoneNumber" />
+
+            <Button
+                android:id="@+id/register_renter_button_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="250dp"
+                android:layout_marginEnd="30dp"
+                android:text="cancel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/renter_register_phoneNumber" />
+        </androidx.cardview.widget.CardView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
@@ -302,8 +364,8 @@
         android:layout_width="328dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:visibility="visible"
         android:text="Register Renter"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/balanceInput" />

@@ -27,6 +27,16 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * This class extends the AppCompatActivity class and is used for creating a new room.
+ *
+ * It contains various fields such as EditText fields for room name, room price, room size, and room address,
+ * as well as Spinner fields for bed type and city. It also contains a Button for submitting a new room,
+ * and a CheckBox for selecting various facilities that the room may have.
+ *
+ * This class also contains an `onCreate` method which sets up the layout and initializes the fields, as well
+ * as an `onClickListener` for the submit button which is used to create a new room object.
+ */
 public class CreateRoomActivity extends AppCompatActivity {
 
     EditText roomName, roomPrice, roomSize, roomAddress;
@@ -40,6 +50,18 @@ public class CreateRoomActivity extends AppCompatActivity {
     BaseApiService mApiService;
     Context mContext;
 
+    /**
+     * This method is called when the activity is first created. It sets the layout and initializes the
+     * fields, as well as setting up an onClickListener for the submit button.
+     *
+     * The Spinner fields are initialized using an ArrayAdapter to populate them with the values from the
+     * BedType and City enums.
+     *
+     * The onClickListener for the submit button creates a new Room object using the values entered in the
+     * EditText fields and selected in the Spinner and CheckBox fields.
+     *
+     * @param savedInstanceState  a Bundle object containing the activity's previously saved state
+     */
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {

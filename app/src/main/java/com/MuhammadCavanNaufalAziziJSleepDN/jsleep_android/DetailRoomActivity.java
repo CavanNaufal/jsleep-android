@@ -2,7 +2,7 @@ package com.MuhammadCavanNaufalAziziJSleepDN.jsleep_android;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import com.google.android.material.textfield.TextInputLayout;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -28,13 +28,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * An activity that displays detailed information about a room, such as its name, price, size, address, and bed type.
+ * The user can also make a booking for the room by specifying a date range.
+ */
 public class DetailRoomActivity extends AppCompatActivity {
 
     TextView roomName, roomPrice, roomSize, roomAddress, roomBedtype, from, to, bookingDate;
     CheckBox ac, refri, wifi, bathub, balcony, restaurant, pool, fitness;
     Button makeBookingButton, btnTo, btnFrom, cancel, booking;
-    ConstraintLayout makeBooking;
 
+    ConstraintLayout makeBooking;
 
     BaseApiService mApiService;
     Context mContext;
@@ -51,6 +55,7 @@ public class DetailRoomActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_room);
 
+        room = MainActivity.getRoom.get(MainActivity.roomPosition);
         roomName = findViewById(R.id.RoomName);
         roomPrice = findViewById(R.id.price);
         roomSize = findViewById(R.id.size);
@@ -82,7 +87,10 @@ public class DetailRoomActivity extends AppCompatActivity {
         cancel = findViewById(R.id.cancelButton);
 
         roomName.setText(room.name);
-        roomPrice.setText(String.valueOf(room.price.price));
+        System.out.println(room);
+        //String.valueOf(room.price.price)
+        String balance = String.valueOf(room.price.price);
+        roomPrice.setText("Rp " + balance);
         roomSize.setText(String.valueOf(room.size));
         roomAddress.setText(room.address);
         roomBedtype.setText(room.bedType.toString());
@@ -109,36 +117,19 @@ public class DetailRoomActivity extends AppCompatActivity {
         booking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent move = new Intent(DetailRoomActivity.this, PaymentActivity.class);
-                startActivity(move);
+                if (btnFrom.getText().toString().equals(btnTo.getText().toString())) {
+                    Toast.makeText(DetailRoomActivity.this, "Please choose different dates", Toast.LENGTH_SHORT).show();
+                } //else if no registered user
+                else if (MainActivity.loginAccount.renter == null) {
+                    Toast.makeText(DetailRoomActivity.this, "No Account Rentered, please renter on your account", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+                else {
+                    create();
+                }
             }
         });
-//        booking.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                create();
-//            }
-//        });
 
-//        for (int i = 0; i < tempRoom.facility.size(); i++) {
-//            if (tempRoom.facility.get(i).equals(Facility.AC)) {
-//                ac.setChecked(true);
-//            } else if (tempRoom.facility.get(i).equals(Facility.Refrigerator)) {
-//                refri.setChecked(true);
-//            } else if (tempRoom.facility.get(i).equals(Facility.WiFi)) {
-//                wifi.setChecked(true);
-//            } else if (tempRoom.facility.get(i).equals(Facility.Bathtub)) {
-//                bathub.setChecked(true);
-//            } else if (tempRoom.facility.get(i).equals(Facility.Balcony)) {
-//                balcony.setChecked(true);
-//            } else if (tempRoom.facility.get(i).equals(Facility.Restaurant)) {
-//                restaurant.setChecked(true);
-//            } else if (tempRoom.facility.get(i).equals(Facility.SwimmingPool)) {
-//                pool.setChecked(true);
-//            } else if (tempRoom.facility.get(i).equals(Facility.FitnessCenter)) {
-//                fitness.setChecked(true);
-//            }
-//        }
         for (int i = 0; i < room.facility.size(); i++) {
             if (room.facility.get(i).equals(Facility.AC)) {
                 ac.setChecked(true);
@@ -184,6 +175,7 @@ public class DetailRoomActivity extends AppCompatActivity {
         int month = cal.get(Calendar.MONTH);
         int day = cal.get(Calendar.DAY_OF_MONTH);
         int style = AlertDialog.THEME_DEVICE_DEFAULT_DARK;
+//        int style = AlertDialog.THEME_HOLO_DARK;
 
         datePickerDialog = new DatePickerDialog(this, style, dateSetListener, year, month, day);
 
@@ -204,6 +196,7 @@ public class DetailRoomActivity extends AppCompatActivity {
         int month = cal.get(Calendar.MONTH);
         int day = cal.get(Calendar.DAY_OF_MONTH);
         int style = AlertDialog.THEME_DEVICE_DEFAULT_DARK;
+//        int style = AlertDialog.THEME_HOLO_DARK;
 
         datePickerDialog = new DatePickerDialog(this, style, dateSetListener, year, month, day);
         datePickerDialog1 = new DatePickerDialog(this, style, dateSetListener, year, month, day);
@@ -253,18 +246,13 @@ public class DetailRoomActivity extends AppCompatActivity {
     }
 
     protected Payment create(){
-//        System.out.println(MainActivity.loginAccount.id);
-        System.out.println(MainActivity.loginAccount.renter.id);
-//        System.out.println(room.id);
-        System.out.println(fromDate);
-        System.out.println(toDate);
-
         mApiService.getPayment(MainActivity.loginAccount.id, MainActivity.loginAccount.renter.id, room.id, fromDate.toString(),
                 toDate.toString()).enqueue(new Callback<Payment>() {
             @Override
             public void onResponse(Call<Payment> call, Response<Payment> response) {
                 if(response.isSuccessful()){
                     MainActivity.paymentAccount = response.body();
+                    MainActivity.loginAccount.balance -= room.price.price;
                     System.out.println("Berhasil");
                     Intent move = new Intent(DetailRoomActivity.this, PaymentActivity.class);
                     startActivity(move);
